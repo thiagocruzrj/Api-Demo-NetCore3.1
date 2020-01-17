@@ -1,2 +1,1 @@
-# SalesSystem-DDD
-Full Sales System with DDD fundamentals
+#Api-Demo-NetCore3.1
