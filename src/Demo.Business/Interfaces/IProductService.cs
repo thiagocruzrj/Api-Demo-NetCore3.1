@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Demo.Business.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace Demo.Business.Interfaces
 {
-    interface IProductService
+    public interface IProductService : IDisposable
     {
+        Task Add(Product product);
+        Task Update(Product product);
+        Task Remove(Guid id);
     }
 }

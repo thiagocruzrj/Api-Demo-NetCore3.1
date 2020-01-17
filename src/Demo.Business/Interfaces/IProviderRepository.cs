@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Demo.Business.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace Demo.Business.Interfaces
 {
-    interface IProviderRepository
+    public interface IProviderRepository : IRepository<Provider>
     {
+        Task<Provider> GetProviderAddres(Guid id);
+        Task<Provider> GetProviderProductsAddress(Guid id);
     }
 }
