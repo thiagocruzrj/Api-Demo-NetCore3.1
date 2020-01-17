@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Demo.Business.Models
+﻿namespace Demo.Business.Models
 {
-    class ProviderType
+    public enum ProviderType
     {
+        PrivatePerson = 1,
+        LegalPerson
     }
 }

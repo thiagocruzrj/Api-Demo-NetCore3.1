@@ -1,10 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Demo.Business.Models
 {
-    class Entity
+    public abstract class Entity
     {
+        protected Entity()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
     }
 }
