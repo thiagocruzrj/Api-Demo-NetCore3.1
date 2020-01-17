@@ -6,8 +6,9 @@ namespace Demo.Business.Models
     {
         public Guid ProviderId { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public string Image { get; set; }
-        public string Value { get; set; }
+        public decimal Value { get; set; }
         public DateTime RegisterDate { get; set; }
         public bool Active { get; set; }
 
