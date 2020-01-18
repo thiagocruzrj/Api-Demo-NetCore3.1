@@ -3,9 +3,6 @@ using Demo.Business.Models;
 using Demo.Business.Notifications;
 using FluentValidation;
 using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Demo.Business.Services
 {
