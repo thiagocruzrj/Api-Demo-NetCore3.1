@@ -17,7 +17,7 @@ namespace Demo.Api.Configuration
             services.AddScoped<IAddressRepository, AddressRepository>();
 
             services.AddScoped<INotifier, Notifier>();
-            services.AddScoped<IProviderService, ProviderRepository>();
+            services.AddScoped<IProviderService, ProviderService>();
             services.AddScoped<IProductService, ProductService>();
 
             return services;
