@@ -1,4 +1,5 @@
 ﻿using Demo.Api.ViewModels;
+using Demo.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,21 @@ namespace Demo.Api.Controllers
         // Business operation validation
     }
 
-    //[Route("api/[controller]")]
-    //public class ProvidersController : MainController
-    //{
-    //    public async Task<IEnumerable<ProviderViewModel>> GetAll()
-    //    {
+    [Route("api/[controller]")]
+    public class ProvidersController : MainController
+    {
+        private readonly IProviderRepository _providerRepository;
 
-    //    }
-    //}
+        public ProvidersController(IProviderRepository providerRepository)
+        {
+            _providerRepository = providerRepository;
+        }
+
+        public async Task<IEnumerable<ProviderViewModel>> GetAll()
+        {
+            var provider = await _providerRepository.GetAll();
+
+            return Ok(provider);
+        }
+    }
 }

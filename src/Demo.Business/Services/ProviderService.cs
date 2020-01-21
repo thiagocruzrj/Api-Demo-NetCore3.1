@@ -14,10 +14,10 @@ namespace Demo.Business.Services
     {
         private readonly IProviderRepository _providerRepository;
         private readonly IAddressRepository _addressRepository;
-        protected ProviderService(INotifier notifier, IAddressRepository addressRepository = null, IProviderRepository providerRepository = null) : base(notifier)
+        protected ProviderService(INotifier notifier, IAddressRepository addressRepository, IProviderRepository providerRepository) : base(notifier)
         {
-            _addressRepository = addressRepository;
             _providerRepository = providerRepository;
+            _addressRepository = addressRepository;
         }
 
         public async Task<bool> Add(Provider provider)
@@ -39,7 +39,7 @@ namespace Demo.Business.Services
         {
             if (!ExecultValidation(new ProviderValidation(), provider)) return false;
 
-            if (_providerRepository.Search(f => f.Document == provider.Document && f.Id == provider.Id).Result.Any()) ;
+            if (_providerRepository.Search(f => f.Document == provider.Document && f.Id == provider.Id).Result.Any())
             {
                 Notify("There's a provate with that filled document");
             }
