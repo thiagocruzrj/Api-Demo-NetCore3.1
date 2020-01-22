@@ -16,7 +16,7 @@ namespace Demo.Api.Controllers
         private readonly IProviderService _providerService;
         private readonly IMapper _mapper;
 
-        public ProvidersController(IProviderRepository providerRepository, IMapper mapper, IProviderService providerService)
+        public ProvidersController(IProviderRepository providerRepository, IMapper mapper, IProviderService providerService, INotifier notifier) : base(notifier)
         {
             _providerRepository = providerRepository;
             _mapper = mapper;
@@ -43,40 +43,36 @@ namespace Demo.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<ProviderViewModel>> Add(ProviderViewModel providerViewModel)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var provider = _mapper.Map<Provider>(providerViewModel);
-            var result = await _providerService.Add(provider);
+            await _providerService.Add(_mapper.Map<Provider>(providerViewModel));
 
-            if (!result) return BadRequest();
-
-            return Ok(provider);
+            return CustomResponse(providerViewModel);
         }
 
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<ProviderViewModel>> Update(Guid id, ProviderViewModel providerViewModel)
         {
-            if (id != providerViewModel.Id) return BadRequest();
-            if (!ModelState.IsValid) return BadRequest();
+            if (id != providerViewModel.Id)
+            {
+                NotifyError("The given ID is not the same as the one passed in the query");
+                return CustomResponse(providerViewModel);
+            }
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var provider = _mapper.Map<Provider>(providerViewModel);
-            var result = await _providerService.Update(provider);
+            await _providerService.Update(_mapper.Map<Provider>(providerViewModel));
 
-            if (!result) return BadRequest();
-
-            return Ok(provider);
+            return CustomResponse(providerViewModel);
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ProviderViewModel>> Remove(Guid id)
         {
-            var provider = await GetProviderAddress(id);
-            if (provider == null) return NotFound();
-            var result = await _providerService.Remove(id);
+            var providerViewModel = await GetProviderAddress(id);
+            if (providerViewModel == null) return NotFound();
+            await _providerService.Remove(id);
 
-            if (!result) return BadRequest();
-
-            return Ok(provider);
+            return CustomResponse(providerViewModel);
         }
 
         public async Task<ProviderViewModel> GetProviderProductsAddress(Guid id)

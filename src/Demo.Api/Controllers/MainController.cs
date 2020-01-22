@@ -22,7 +22,7 @@ namespace Demo.Api.Controllers
             return !_notifier.HasNotification();
         }
 
-        protected ActionResult CustomReposonse(object result = null)
+        protected ActionResult CustomResponse(object result = null)
         {
             if(ValidOperation())
             {
@@ -40,10 +40,10 @@ namespace Demo.Api.Controllers
             });
         }
 
-        protected ActionResult CustomReposonse(ModelStateDictionary modelSate)
+        protected ActionResult CustomResponse(ModelStateDictionary modelSate)
         {
             if (!modelSate.IsValid) NotifyErrorInvalidModel(modelSate);
-            return CustomReposonse();
+            return CustomResponse();
         }
 
         protected void NotifyErrorInvalidModel(ModelStateDictionary modelState)
