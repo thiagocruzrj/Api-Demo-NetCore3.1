@@ -13,14 +13,16 @@ namespace Demo.Api.Controllers
     public class ProvidersController : MainController
     {
         private readonly IProviderRepository _providerRepository;
+        private readonly IAddressRepository _addressRepository;
         private readonly IProviderService _providerService;
         private readonly IMapper _mapper;
 
-        public ProvidersController(IProviderRepository providerRepository, IMapper mapper, IProviderService providerService, INotifier notifier) : base(notifier)
+        public ProvidersController(IProviderRepository providerRepository, IMapper mapper, IProviderService providerService, INotifier notifier, IAddressRepository addressRepository) : base(notifier)
         {
             _providerRepository = providerRepository;
             _mapper = mapper;
             _providerService = providerService;
+            _addressRepository = addressRepository;
         }
 
         [HttpGet]
@@ -73,6 +75,28 @@ namespace Demo.Api.Controllers
             await _providerService.Remove(id);
 
             return CustomResponse(providerViewModel);
+        }
+
+        [HttpGet("get-address/{id:guid}")]
+        public async Task<AddressViewModel> GetAddressById(Guid id)
+        {
+            return _mapper.Map<AddressViewModel>(await _addressRepository.GetById(id));
+        }
+
+        [HttpPut("update-address/{id:guid}")]
+        public async Task<IActionResult> UpdateAddress(Guid id, AddressViewModel addressViewModel)
+        {
+            if (id != addressViewModel.Id)
+            {
+                NotifyError("The given ID is not the same as the one passed in the query");
+                return CustomResponse(addressViewModel);
+            }
+
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            await _providerService.UpdateAddress(_mapper.Map<Address>(addressViewModel));
+
+            return CustomResponse(addressViewModel);
         }
 
         public async Task<ProviderViewModel> GetProviderProductsAddress(Guid id)
