@@ -39,9 +39,10 @@ namespace Demo.Business.Services
         {
             if (!ExecultValidation(new ProviderValidation(), provider)) return false;
 
-            if (_providerRepository.Search(f => f.Document == provider.Document && f.Id == provider.Id).Result.Any())
+            if (_providerRepository.Search(f => f.Document == provider.Document && f.Id != provider.Id).Result.Any())
             {
                 Notify("There's a provate with that filled document");
+                return false;
             }
 
             await _providerRepository.Update(provider);
