@@ -8,7 +8,7 @@ namespace Demo.Business.Notifications
 {
     public class Notifier : INotifier
     {
-        private List<Notification> _notifications;
+        private readonly List<Notification> _notifications;
 
         public Notifier()
         {

@@ -1,4 +1,5 @@
-﻿using Demo.Api.ViewModels;
+﻿using AutoMapper;
+using Demo.Api.ViewModels;
 using Demo.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,17 +21,18 @@ namespace Demo.Api.Controllers
     public class ProvidersController : MainController
     {
         private readonly IProviderRepository _providerRepository;
+        private readonly IMapper _mapper;
 
-        public ProvidersController(IProviderRepository providerRepository)
+        public ProvidersController(IProviderRepository providerRepository, IMapper mapper)
         {
             _providerRepository = providerRepository;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<ProviderViewModel>> GetAll()
         {
-            var provider = await _providerRepository.GetAll();
-
-            return Ok(provider);
+            var provider = _mapper.Map<IEnumerable<ProviderViewModel>>(await _providerRepository.GetAll());
+            return provider;
         }
     }
 }

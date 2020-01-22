@@ -14,7 +14,7 @@ namespace Demo.Business.Services
     {
         private readonly IProviderRepository _providerRepository;
         private readonly IAddressRepository _addressRepository;
-        protected ProviderService(INotifier notifier, IAddressRepository addressRepository, IProviderRepository providerRepository) : base(notifier)
+        public ProviderService(IProviderRepository providerRepository, IAddressRepository addressRepository, INotifier notifier) : base(notifier)
         {
             _providerRepository = providerRepository;
             _addressRepository = addressRepository;
