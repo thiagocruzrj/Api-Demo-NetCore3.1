@@ -60,13 +60,14 @@ namespace Demo.Business.Services
             if(_providerRepository.GetProviderProductsAddress(id).Result.Products.Any())
             {
                 Notify("The provider has registered products!");
+                return false;
             }
 
             var address = await _addressRepository.GetAddressByProvider(id);
 
             if( address != null)
             {
-                await _addressRepository.Remove(id);
+                await _addressRepository.Remove(address.Id);
             }
 
             await _providerRepository.Remove(id);
