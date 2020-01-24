@@ -37,6 +37,14 @@ namespace Demo.Api
             });
 
             services.ResolveDependencies();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Development",
+                builder => builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +60,8 @@ namespace Demo.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("Development");
 
             app.UseEndpoints(endpoints =>
             {
