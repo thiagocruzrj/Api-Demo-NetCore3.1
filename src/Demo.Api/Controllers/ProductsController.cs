@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Demo.Api.Controllers
@@ -45,12 +44,12 @@ namespace Demo.Api.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var imageName = Guid.NewGuid() + "_" + productViewModel.Image;
-
             if (!UploadFile(productViewModel.ImagemUpload, imageName))
             {
                 return CustomResponse(productViewModel);
             }
 
+            productViewModel.Image = imageName;
             await _productService.Add(_mapper.Map<Product>(productViewModel));
 
             return CustomResponse(productViewModel);
