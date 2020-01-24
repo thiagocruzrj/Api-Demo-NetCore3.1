@@ -44,6 +44,13 @@ namespace Demo.Api.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
+            var imageName = Guid.NewGuid() + "_" + productViewModel.Image;
+
+            if (!UploadFile(productViewModel.ImagemUpload, imageName))
+            {
+                return CustomResponse(productViewModel);
+            }
+
             await _productService.Add(_mapper.Map<Product>(productViewModel));
 
             return CustomResponse(productViewModel);
@@ -70,7 +77,7 @@ namespace Demo.Api.Controllers
 
             if(string.IsNullOrEmpty(file))
             {
-                ModelState.AddModelError(string.Empty, "Provider an image for that product");
+                NotifyError("Provider an image for that product");
                 return false;
             }
 
@@ -78,7 +85,7 @@ namespace Demo.Api.Controllers
 
             if (System.IO.File.Exists(filePath))
             {
-                ModelState.AddModelError(string.Empty, "A file with that name already exists");
+                NotifyError("A file with that name already exists");
                 return false;
             }
 
