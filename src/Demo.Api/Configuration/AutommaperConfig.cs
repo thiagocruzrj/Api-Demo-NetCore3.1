@@ -10,7 +10,7 @@ namespace Demo.Api.Configuration
         {
             CreateMap<Provider, ProviderViewModel>().ReverseMap();
             CreateMap<Address, AddressViewModel>().ReverseMap();
-            CreateMap<Product, ProductViewModel>().ReverseMap();
+            CreateMap<ProductViewModel, Product>();
 
             CreateMap<Product, ProductViewModel>()
                 .ForMember(dest => dest.ProviderName, opt => opt.MapFrom(src => src.Provider.Name));

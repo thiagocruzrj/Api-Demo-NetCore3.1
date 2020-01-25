@@ -80,7 +80,7 @@ namespace Demo.Api.Controllers
                 return false;
             }
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", imgName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Front-Angular-Demo/src/assets", imgName);
 
             if (System.IO.File.Exists(filePath))
             {
