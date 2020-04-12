@@ -49,9 +49,11 @@ namespace SalesSystem.Business.Services
             return true;
         }
 
-        public Task AtualizarEndereco(Endereco endereco)
+        public async Task AtualizarEndereco(Endereco endereco)
         {
-            throw new NotImplementedException();
+            if (!ExecutarValidacao(new EnderecoValidation(), endereco)) return;
+
+            await _enderecoRepository.Atualizar(endereco);
         }
 
         public Task<bool> Remover(Guid id)
