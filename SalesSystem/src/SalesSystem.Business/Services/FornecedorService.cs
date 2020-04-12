@@ -37,9 +37,16 @@ namespace SalesSystem.Business.Services
             return true;
         }
 
-        public Task<bool> Atualizar(Fornecedor fornecedor)
+        public async Task<bool> Atualizar(Fornecedor fornecedor)
         {
-            throw new NotImplementedException();
+            if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)) return false;
+            if(_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento && f.Id != fornecedor.Id).Result.Any())
+            {
+                Notificar("Já existe um fornecedor com o documento informado");
+                return false;
+            }
+            await _fornecedorRepository.Atualizar(fornecedor);
+            return true;
         }
 
         public Task AtualizarEndereco(Endereco endereco)
