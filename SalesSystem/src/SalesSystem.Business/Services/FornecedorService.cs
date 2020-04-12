@@ -56,14 +56,28 @@ namespace SalesSystem.Business.Services
             await _enderecoRepository.Atualizar(endereco);
         }
 
-        public Task<bool> Remover(Guid id)
+        public async Task<bool> Remover(Guid id)
         {
-            throw new NotImplementedException();
+            if (_fornecedorRepository.ObterFornecedorProdutosEndereco(id).Result.Produtos.Any())
+            {
+                Notificar("O fornecedor possui endereços cadastrados!");
+                return false;
+            }
+
+            var endereco = await _enderecoRepository.ObterEnderecoPorFornecedor(id);
+
+            if (endereco != null)
+            {
+                await _enderecoRepository.Remover(endereco.Id);
+            }
+            await _fornecedorRepository.Remover(id);
+            return true;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _fornecedorRepository?.Dispose();
+            _enderecoRepository?.Dispose();
         }
     }
 }
