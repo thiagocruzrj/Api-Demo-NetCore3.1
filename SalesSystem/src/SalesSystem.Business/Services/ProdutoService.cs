@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SalesSystem.Business.Services
 {
-    class ProdutoService : BaseService, IProdutoService
+    public class ProdutoService : BaseService, IProdutoService
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IUser _user;
