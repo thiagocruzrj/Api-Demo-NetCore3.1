@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SalesSystem.Business.Models;
 
-namespace DevIO.Data.Context
+namespace SalesSystem.Data.Context
 {
     public class MeuDbContext : DbContext
     {
