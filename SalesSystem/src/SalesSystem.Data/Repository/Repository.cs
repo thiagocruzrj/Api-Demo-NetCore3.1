@@ -4,6 +4,7 @@ using SalesSystem.Business.Models;
 using SalesSystem.Data.Context;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -20,44 +21,47 @@ namespace SalesSystem.Data.Repository
             DbSet = db.Set<TEntity>();
         }
 
-        public Task Adicionar(TEntity entity)
+        public async Task Adicionar(TEntity entity)
         {
-            throw new NotImplementedException();
+            DbSet.Add(entity);
+            await SaveChanges();
         }
 
-        public Task Atualizar(TEntity entity)
+        public async Task Atualizar(TEntity entity)
         {
-            throw new NotImplementedException();
+            DbSet.Update(entity);
+            await SaveChanges();
         }
 
-        public Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
 
-        public Task<TEntity> ObterPorId(Guid id)
+        public async Task<TEntity> ObterPorId(Guid id)
         {
-            throw new NotImplementedException();
+            return await DbSet.FindAsync(id);
         }
 
-        public Task<List<TEntity>> ObterTodos()
+        public async Task<List<TEntity>> ObterTodos()
         {
-            throw new NotImplementedException();
+            return await DbSet.ToListAsync();
         }
 
-        public Task Remover(Guid id)
+        public async Task Remover(Guid id)
         {
-            throw new NotImplementedException();
+            DbSet.Remove(new TEntity { Id = id } );
+            await SaveChanges();
         }
 
-        public Task<int> SaveChanges()
+        public async Task<int> SaveChanges()
         {
-            throw new NotImplementedException();
+            return await Db.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Db?.Dispose();
         }
     }
 }
