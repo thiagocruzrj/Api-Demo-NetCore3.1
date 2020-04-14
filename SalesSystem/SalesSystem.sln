@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesSystem.Business", "src\SalesSystem.Business\SalesSystem.Business.csproj", "{A89600E3-A83C-454B-A878-168281FF8A05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesSystem.Business", "src\SalesSystem.Business\SalesSystem.Business.csproj", "{A89600E3-A83C-454B-A878-168281FF8A05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesSystem.Data", "src\SalesSystem.Data\SalesSystem.Data.csproj", "{81FD00E0-2A93-422E-82DD-B79D655D687B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesSystem.Data", "src\SalesSystem.Data\SalesSystem.Data.csproj", "{81FD00E0-2A93-422E-82DD-B79D655D687B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesSystem.Api", "sql\SalesSystem.Api\SalesSystem.Api.csproj", "{1858FB1B-D363-43B6-9DEE-3FD4DFA1F3F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{81FD00E0-2A93-422E-82DD-B79D655D687B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81FD00E0-2A93-422E-82DD-B79D655D687B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81FD00E0-2A93-422E-82DD-B79D655D687B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1858FB1B-D363-43B6-9DEE-3FD4DFA1F3F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1858FB1B-D363-43B6-9DEE-3FD4DFA1F3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1858FB1B-D363-43B6-9DEE-3FD4DFA1F3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1858FB1B-D363-43B6-9DEE-3FD4DFA1F3F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
