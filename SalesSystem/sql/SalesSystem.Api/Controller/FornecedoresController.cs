@@ -69,9 +69,28 @@ namespace SalesSystem.Api.Controller
             return Ok(result);
         }
 
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult> RemoverFornecedor(Guid id, FornecedorViewModel fornecedorViewModel)
+        {
+            var fornecedor = await ObterFornecedorEndereco(id);
+
+            if (fornecedor == null) return NotFound();
+
+            var result = await _fornecedorService.Remover(id);
+
+            if (!result) BadRequest();
+
+            return Ok(fornecedor);
+        }
+
         public async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id)
         {
             return _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
+        }
+
+        public async Task<FornecedorViewModel> ObterFornecedorEndereco(Guid id)
+        {
+            return _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorEndereco(id));
         }
     }
 }
