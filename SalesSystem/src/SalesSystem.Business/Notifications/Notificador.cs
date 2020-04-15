@@ -6,11 +6,11 @@ namespace SalesSystem.Business.Notifications
 {
     public class Notificador : INotificador
     {
-        private readonly List<Notificacao> _notificacoes;
+        private List<Notificacao> _notificacoes;
 
-        public Notificador(List<Notificacao> notificacoes)
+        public Notificador()
         {
-            _notificacoes = notificacoes;
+            _notificacoes = new List<Notificacao>();
         }
 
         public void Handle(Notificacao notificacao)
