@@ -27,6 +27,11 @@ namespace SalesSystem.Api.Controller
 
         public async Task<FornecedorViewModel> ObterPorId(Guid id)
         {
+            return _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterPorId(id));
+        }
+
+        public async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id)
+        {
             return _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
         }
     }
