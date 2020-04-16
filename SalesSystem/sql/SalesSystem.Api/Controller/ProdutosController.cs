@@ -72,7 +72,7 @@ namespace SalesSystem.Api.Controller
                 return CustomResponse();
             }
 
-            produtoImagemViewModel.Imagem = imagemPrefixo;
+            produtoImagemViewModel.Imagem = imagemPrefixo + produtoImagemViewModel.ImagemUpload.FileName;
             await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoImagemViewModel));
 
             return CustomResponse(produtoImagemViewModel);
@@ -126,7 +126,7 @@ namespace SalesSystem.Api.Controller
                 return false;
             }
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/app/demo-webapi/src/assets", imgPrefixo + arquivo.FileName);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imgPrefixo + arquivo.FileName);
 
             if (System.IO.File.Exists(path))
             {
