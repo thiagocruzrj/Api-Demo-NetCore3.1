@@ -16,6 +16,7 @@ namespace SalesSystem.Api.Controller
         private readonly IProdutoRepository _produtoRepository;
         private readonly IProdutoService _produtoService;
         private readonly IMapper _mapper;
+
         public ProdutosController(INotificador notificador,
             IProdutoRepository produtoRepository,
             IProdutoService produtoService,
