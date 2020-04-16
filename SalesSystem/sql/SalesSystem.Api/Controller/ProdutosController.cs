@@ -43,7 +43,7 @@ namespace SalesSystem.Api.Controller
             return produtoViewModel;
         }
 
-        [HttpPost]
+        [HttpPost("adicionar")]
         public async Task<ActionResult<ProdutoViewModel>> Adicionar(ProdutoViewModel produtoViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
@@ -58,6 +58,23 @@ namespace SalesSystem.Api.Controller
             await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoViewModel));
 
             return CustomResponse(produtoViewModel);
+        }
+
+        [HttpPost("adicionar-alternativa")]
+        public async Task<ActionResult<ProdutoViewModel>> AdicionarAlternativo(ProdutoImagemViewModel produtoImagemViewModel)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            var imagemPrefixo = Guid.NewGuid() + "_";
+            if (!UploadArquivo(produtoImagemViewModel.Imagem, imagemPrefixo))
+            {
+                return CustomResponse();
+            }
+
+            produtoImagemViewModel.Imagem = imagemPrefixo;
+            await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoImagemViewModel));
+
+            return CustomResponse(produtoImagemViewModel);
         }
 
         [HttpDelete("{id:guid}")]
