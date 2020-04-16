@@ -47,6 +47,13 @@ namespace SalesSystem.Api.Controller
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
+            var imagemNome = Guid.NewGuid() + "_" + produtoViewModel.Imagem;
+            if(!UploadArquivo(produtoViewModel.Imagem, imagemNome))
+            {
+                return CustomResponse();
+            }
+
+            produtoViewModel.Imagem = imagemNome;
             await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoViewModel));
 
             return CustomResponse(produtoViewModel);
