@@ -88,15 +88,18 @@ namespace SalesSystem.Api.Controller
             return _mapper.Map<EnderecoViewModel>(await _enderecoRepository.ObterPorId(id));
         }
 
-        [HttpGet("atualizar-endereco/{id:guid}")]
+        [HttpPut("atualizar-endereco/{id:guid}")]
         public async Task<IActionResult> AtualizarEndereco(Guid id, EnderecoViewModel enderecoViewModel)
         {
-            if (id != enderecoViewModel.Id) return BadRequest();
+            if (id != enderecoViewModel.Id)
+            {
+                NotificarErro("O id informado não é o mesmo que na query");
+                return CustomResponse(enderecoViewModel);
+            }
 
             if (!ModelState.IsValid) return CustomResponse(enderecoViewModel);
 
-            var endereco = _mapper.Map<Endereco>(enderecoViewModel);
-            await _fornecedorService.AtualizarEndereco(endereco);
+            await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(enderecoViewModel));
 
             return CustomResponse(enderecoViewModel);
         }
