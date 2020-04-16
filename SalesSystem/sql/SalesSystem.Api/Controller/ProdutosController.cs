@@ -35,8 +35,22 @@ namespace SalesSystem.Api.Controller
         public async Task<ActionResult<ProdutoViewModel>> ObterPorId(Guid id)
         {
             var produtoViewModel = await ObterProduto(id);
+
             if (produtoViewModel == null) return NotFound();
+
             return produtoViewModel;
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult<ProdutoViewModel>> Excluir(Guid id)
+        {
+            var produto = await ObterPorId(id);
+
+            if (produto == null) return NotFound();
+
+            await _produtoService.Remover(id);
+
+            return CustomResponse(produto);
         }
 
         private async Task<ProdutoViewModel> ObterProduto(Guid id)
