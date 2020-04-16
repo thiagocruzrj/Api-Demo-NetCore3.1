@@ -14,16 +14,18 @@ namespace SalesSystem.Api.Controller
     {
         private readonly IFornecedorRepository _fornecedorRepository;
         private readonly IFornecedorService _fornecedorService;
+        private readonly IEnderecoRepository _enderecoRepository;
         private readonly IMapper _mapper;
 
         public FornecedoresController(IFornecedorRepository fornecedorRepository,
-                                        IMapper mapper, 
+                                        IMapper mapper,
                                         IFornecedorService fornecedorService,
-                                        INotificador notificador) : base(notificador)
+                                        INotificador notificador, IEnderecoRepository enderecoRepository) : base(notificador)
         {
             _fornecedorRepository = fornecedorRepository;
             _mapper = mapper;
             _fornecedorService = fornecedorService;
+            _enderecoRepository = enderecoRepository;
         }
 
         [HttpGet]
@@ -78,6 +80,12 @@ namespace SalesSystem.Api.Controller
             await _fornecedorService.Remover(id);
 
             return CustomResponse();
+        }
+
+        [HttpGet("obter-endereco/{id:guid}")]
+        public async Task<EnderecoViewModel> ObterEnderecoPorId(Guid id)
+        {
+            return _mapper.Map<EnderecoViewModel>(await _enderecoRepository.ObterPorId(id));
         }
 
         public async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id)
