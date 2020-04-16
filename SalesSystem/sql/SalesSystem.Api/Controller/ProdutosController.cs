@@ -34,9 +34,14 @@ namespace SalesSystem.Api.Controller
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<ProdutoViewModel>> ObterPorId(Guid id)
         {
-            var produtoViewModel = await ObterPorId(id);
+            var produtoViewModel = await ObterProduto(id);
             if (produtoViewModel == null) return NotFound();
             return produtoViewModel;
+        }
+
+        private async Task<ProdutoViewModel> ObterProduto(Guid id)
+        {
+            return _mapper.Map<ProdutoViewModel>(await _produtoRepository.ObterProdutoFornecedor(id));
         }
     }
 }
