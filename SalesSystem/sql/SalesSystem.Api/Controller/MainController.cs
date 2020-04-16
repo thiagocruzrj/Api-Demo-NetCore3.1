@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SalesSystem.Business.Interfaces;
 using SalesSystem.Business.Notifications;
-using System;
 using System.Linq;
 
 namespace SalesSystem.Api.Controller
@@ -17,9 +16,32 @@ namespace SalesSystem.Api.Controller
             _notificador = notificador;
         }
 
+        protected bool OperacaoValida()
+        {
+            return !_notificador.TemNotificacao();
+        }
+
+        protected ActionResult CustomResponse(object result = null)
+        {
+            if (OperacaoValida())
+            {
+                return Ok(new {
+                    success = true,
+                    data = result
+                });
+            }
+
+            return BadRequest(new 
+            {
+                success = false,
+                errors = _notificador.ObterNotificacoes().Select(n => n.Mensagem)
+            });
+        }
+
         protected ActionResult CustomResponse(ModelStateDictionary modelState)
         {
-
+            if (!modelState.IsValid) NotificarErrorModelStateInvalida(modelState);
+            return CustomResponse();
         }
 
         protected void NotificarErrorModelStateInvalida(ModelStateDictionary modelState)
