@@ -66,14 +66,12 @@ namespace SalesSystem.Api.Controller
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var imagemPrefixo = Guid.NewGuid() + "_";
-            if (!UploadArquivo(produtoImagemViewModel.Imagem, imagemPrefixo))
-            {
-                return CustomResponse();
-            }
+            var imgPrefixo = Guid.NewGuid() + "_";
+            if (!await UploadArquivoAlternativo(produtoImagemViewModel.ImagemUpload, imgPrefixo))
+                return CustomResponse(ModelState);
 
-            produtoImagemViewModel.Imagem = imagemPrefixo + produtoImagemViewModel.ImagemUpload.FileName;
-            await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoImagemViewModel));
+            produtoImagemViewModel.Imagem = imgPrefixo + produtoImagemViewModel.ImagemUpload.FileName;
+            await _produtoService.Adicionar(_mapper.Map<Produto>(produtoImagemViewModel));
 
             return CustomResponse(produtoImagemViewModel);
         }
