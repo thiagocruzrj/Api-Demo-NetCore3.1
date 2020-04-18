@@ -27,6 +27,8 @@ namespace SalesSystem.Api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddIdentityConfiguration();
+
             services.WebConfig();
 
             services.AddAutoMapper(typeof(Startup));
