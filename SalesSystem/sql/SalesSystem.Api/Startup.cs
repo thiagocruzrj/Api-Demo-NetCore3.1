@@ -27,7 +27,7 @@ namespace SalesSystem.Api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddIdentityConfiguration();
+            services.AddIdentityConfiguration(Configuration);
 
             services.WebConfig();
 
