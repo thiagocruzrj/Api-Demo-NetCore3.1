@@ -57,6 +57,7 @@ namespace SalesSystem.Api
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseMvcConfiguration();
         }
     }
