@@ -34,4 +34,10 @@ namespace SalesSystem.Api.ViewModels
         public string Email { get; set; }
         public IEnumerable<ClaimViewModel> Claims { get; set; }
     }
+
+    public class ClaimViewModel
+    {
+        public string Value { get; set; }
+        public string Type { get; set; }
+    }
 }
