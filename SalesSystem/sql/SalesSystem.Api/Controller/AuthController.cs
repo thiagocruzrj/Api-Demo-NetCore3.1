@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SalesSystem.Api.Controller
 {
-    [Route("api/conta")]
+    [Route("api")]
     public class AuthController : MainController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -19,6 +19,7 @@ namespace SalesSystem.Api.Controller
             _signInManager = signInManager;
         }
 
+        [HttpPost("nova-conta")]
         public async Task<ActionResult> Registrar(RegisterUserViewModel registerUser)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
@@ -43,6 +44,27 @@ namespace SalesSystem.Api.Controller
             }
 
             return CustomResponse(registerUser);
+        }
+
+        [HttpPost("entrar")]
+        public async Task<ActionResult> Login(LoginUserViewModel loginUser)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+            var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, true);
+
+            if (result.Succeeded)
+            {
+                return CustomResponse(loginUser);
+            }
+
+            if (result.IsLockedOut)
+            {
+                NotificarErro("Usuario temporariamente bloqueado por tentativas.");
+                return CustomResponse(loginUser);
+            }
+
+            NotificarErro("Usuário ou senha incorretos");
+            return CustomResponse(loginUser);
         }
     }
 }
