@@ -25,8 +25,12 @@ namespace SalesSystem.Api.Controller
             var user = new IdentityUser
             {
                 UserName = registerUser.Email,
-                Email = registerUser.Email
+                Email = registerUser.Email,
+                EmailConfirmed = true
             };
+
+            var result = await _userManager.CreateAsync(user, registerUser.Password);
+
             return CustomResponse(registerUser);
         }
     }
