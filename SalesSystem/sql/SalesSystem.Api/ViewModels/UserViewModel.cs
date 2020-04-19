@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SalesSystem.Api.ViewModels
 {
-    public class RegisterViewModel
+    public class RegisterUserViewModel
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
