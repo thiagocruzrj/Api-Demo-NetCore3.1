@@ -31,6 +31,17 @@ namespace SalesSystem.Api.Controller
 
             var result = await _userManager.CreateAsync(user, registerUser.Password);
 
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, false);
+                return CustomResponse(registerUser);
+            }
+
+            foreach (var error in result.Errors)
+            {
+                NotificarErro(error.Description);
+            }
+
             return CustomResponse(registerUser);
         }
     }
