@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SalesSystem.Api.Data;
+using SalesSystem.Api.Extensions;
 
 namespace SalesSystem.Api.Configuration
 {
@@ -17,6 +18,7 @@ namespace SalesSystem.Api.Configuration
             services.AddIdentityCore<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddErrorDescriber<IdentityMensagensPortugues>()
                 .AddDefaultTokenProviders();
 
             return services;
