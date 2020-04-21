@@ -1,7 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using SalesSystem.Api.Extensions;
 using SalesSystem.Api.ViewModels;
 using SalesSystem.Business.Interfaces;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SalesSystem.Api.Controller
@@ -11,12 +17,16 @@ namespace SalesSystem.Api.Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly AppSettings _appSettings;
+
         public AuthController(INotificador notificador,
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager) : base(notificador)
+            SignInManager<IdentityUser> signInManager,
+            IOptions<AppSettings> appSettings) : base(notificador)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _appSettings = appSettings.Value;
         }
 
         [HttpPost("nova-conta")]
@@ -65,6 +75,22 @@ namespace SalesSystem.Api.Controller
 
             NotificarErro("Usuário ou senha incorretos");
             return CustomResponse(loginUser);
+        }
+
+        private string GerarJwt()
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
+            {
+                Issuer = _appSettings.Emissor,
+                Audience = _appSettings.ValidoEm,
+                Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            });
+
+            var encodedToken = tokenHandler.WriteToken(token);
+            return encodedToken;
         }
     }
 }
