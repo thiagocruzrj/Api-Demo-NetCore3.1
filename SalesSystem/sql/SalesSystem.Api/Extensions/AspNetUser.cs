@@ -41,6 +41,19 @@ namespace SalesSystem.Api.Extensions
         {
             return _accessor.HttpContext.User.Claims;
         }
+    }
 
+    public static class ClaimsPrincipalExtensions
+    {
+        public static string GetUserId(this ClaimsPrincipal principal)
+        {
+            if(principal == null)
+            {
+                throw new ArgumentException(nameof(principal));
+            }
+
+            var claim = principal.FindFirst(ClaimTypes.NameIdentifier);
+            return claim?.Value;
+        }
     }
 }
