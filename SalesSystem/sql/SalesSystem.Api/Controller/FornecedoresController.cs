@@ -23,7 +23,9 @@ namespace SalesSystem.Api.Controller
         public FornecedoresController(IFornecedorRepository fornecedorRepository,
                                         IMapper mapper,
                                         IFornecedorService fornecedorService,
-                                        INotificador notificador, IEnderecoRepository enderecoRepository) : base(notificador)
+                                        INotificador notificador,
+                                        IEnderecoRepository enderecoRepository
+                                        IUser user) : base(notificador, user)
         {
             _fornecedorRepository = fornecedorRepository;
             _mapper = mapper;

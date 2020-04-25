@@ -24,7 +24,8 @@ namespace SalesSystem.Api.Controller
         public AuthController(INotificador notificador,
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            IOptions<AppSettings> appSettings) : base(notificador)
+            IOptions<AppSettings> appSettings,
+            IUser user) : base(notificador, user)
         {
             _userManager = userManager;
             _signInManager = signInManager;
