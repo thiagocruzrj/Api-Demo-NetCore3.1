@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
+using System.Security.Claims;
 
 namespace SalesSystem.Api.Extensions
 {
@@ -9,6 +12,14 @@ namespace SalesSystem.Api.Extensions
         {
             return context.User.Identity.IsAuthenticated &&
                 context.User.Claims.Any(c => c.Type == claimName && c.Value.Contains(claimValue));
+        }
+    }
+
+    public class ClaimsAuthorizeAttribute : TypeFilterAttribute
+    {
+        public ClaimsAuthorizeAttribute(string claimName, string claimValue) : base(typeof(RequisitoClaimFilter))
+        {
+            Arguments = new object[] { new Claim(claimName, claimValue) };
         }
     }
 }
