@@ -32,15 +32,15 @@ namespace SalesSystem.Api.Extensions
             return _accessor.HttpContext.User.Identity.IsAuthenticated;
         }
 
+        public bool IsInRole(string role)
+        {
+            return _accessor.HttpContext.User.IsInRole(role);
+        }
+
         public IEnumerable<Claim> GetClaimsIdentity()
         {
             return _accessor.HttpContext.User.Claims;
         }
 
-
-        public bool IsInRole(string role)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
