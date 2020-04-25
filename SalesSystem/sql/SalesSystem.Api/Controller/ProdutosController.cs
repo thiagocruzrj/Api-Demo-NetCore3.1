@@ -117,7 +117,7 @@ namespace SalesSystem.Api.Controller
             return CustomResponse(produtoViewModel);
         }
 
-
+        [ClaimsAuthorize("Produto", "Excluir")]
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ProdutoViewModel>> Excluir(Guid id)
         {
