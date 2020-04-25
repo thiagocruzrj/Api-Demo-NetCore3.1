@@ -27,15 +27,16 @@ namespace SalesSystem.Api.Extensions
             return IsAuthenticated() ? _accessor.HttpContext.User.GetUserEmail() : "";
         }
 
+        public bool IsAuthenticated()
+        {
+            return _accessor.HttpContext.User.Identity.IsAuthenticated;
+        }
+
         public IEnumerable<Claim> GetClaimsIdentity()
         {
             return _accessor.HttpContext.User.Claims;
         }
 
-        public bool IsAuthenticated()
-        {
-            throw new NotImplementedException();
-        }
 
         public bool IsInRole(string role)
         {
