@@ -22,16 +22,15 @@ namespace SalesSystem.Api.Extensions
             return IsAuthenticated() ? Guid.Parse(_accessor.HttpContext.User.GetUserId()) : Guid.Empty;
         }
 
+        public string GetUserEmail()
+        {
+            return IsAuthenticated() ? _accessor.HttpContext.User.GetUserEmail() : "";
+        }
+
         public IEnumerable<Claim> GetClaimsIdentity()
         {
             return _accessor.HttpContext.User.Claims;
         }
-
-        public string GetUserEmail()
-        {
-            throw new NotImplementedException();
-        }
-
 
         public bool IsAuthenticated()
         {
