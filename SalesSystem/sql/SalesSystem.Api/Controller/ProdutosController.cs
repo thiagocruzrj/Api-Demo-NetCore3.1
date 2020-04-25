@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SalesSystem.Api.Extensions;
 using SalesSystem.Api.ViewModels;
 using SalesSystem.Business.Interfaces;
 using SalesSystem.Business.Models;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace SalesSystem.Api.Controller
 {
+    [Authorize]
     [Route("api/produtos")]
     public class ProdutosController : MainController
     {
@@ -61,6 +64,7 @@ namespace SalesSystem.Api.Controller
             return CustomResponse(produtoViewModel);
         }
 
+        [ClaimsAuthorize("Produto", "Atualizar")]
         [HttpPost("adicionar-alternativa")]
         public async Task<ActionResult<ProdutoViewModel>> AdicionarAlternativo(ProdutoImagemViewModel produtoImagemViewModel)
         {
@@ -78,6 +82,7 @@ namespace SalesSystem.Api.Controller
             return CustomResponse(produtoImagemViewModel);
         }
 
+        [ClaimsAuthorize("Produto", "Atualizar")]
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Atualizar(Guid id, ProdutoViewModel produtoViewModel)
         {
