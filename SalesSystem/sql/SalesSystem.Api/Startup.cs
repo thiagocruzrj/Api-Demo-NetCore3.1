@@ -41,13 +41,6 @@ namespace SalesSystem.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseAuthorization();
-
-            if (env.IsDevelopment())
-            {
                 app.UseCors("Development");
                 app.UseDeveloperExceptionPage();
             }
@@ -58,6 +51,7 @@ namespace SalesSystem.Api
             }
 
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseMvcConfiguration();
         }
     }
