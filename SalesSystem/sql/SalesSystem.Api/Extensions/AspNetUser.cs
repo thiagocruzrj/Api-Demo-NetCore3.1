@@ -24,7 +24,7 @@ namespace SalesSystem.Api.Extensions
 
         public IEnumerable<Claim> GetClaimsIdentity()
         {
-            throw new NotImplementedException();
+            return _accessor.HttpContext.User.Claims;
         }
 
         public string GetUserEmail()
