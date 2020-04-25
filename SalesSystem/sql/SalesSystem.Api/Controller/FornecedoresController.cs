@@ -76,7 +76,7 @@ namespace SalesSystem.Api.Controller
             return CustomResponse(fornecedorViewModel);
         }
 
-        [ClaimsAuthorize("Fornecedor", "Excluir")]
+        [ClaimsAuthorize("Fornecedor", "Remover")]
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult> RemoverFornecedor(Guid id)
         {
@@ -112,12 +112,12 @@ namespace SalesSystem.Api.Controller
             return CustomResponse(enderecoViewModel);
         }
 
-        public async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id)
+        private async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id)
         {
             return _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
         }
 
-        public async Task<FornecedorViewModel> ObterFornecedorEndereco(Guid id)
+        private async Task<FornecedorViewModel> ObterFornecedorEndereco(Guid id)
         {
             return _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorEndereco(id));
         }
