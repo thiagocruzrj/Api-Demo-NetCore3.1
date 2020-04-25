@@ -17,6 +17,11 @@ namespace SalesSystem.Api.Extensions
 
         public string Name => _accessor.HttpContext.User.Identity.Name;
 
+        public Guid GetUserId()
+        {
+            return IsAuthenticated() ? Guid.Parse(_accessor.HttpContext.User.GetUserId()) : Guid.Empty;
+        }
+
         public IEnumerable<Claim> GetClaimsIdentity()
         {
             throw new NotImplementedException();
@@ -27,10 +32,6 @@ namespace SalesSystem.Api.Extensions
             throw new NotImplementedException();
         }
 
-        public Guid GetUserId()
-        {
-            throw new NotImplementedException();
-        }
 
         public bool IsAuthenticated()
         {
