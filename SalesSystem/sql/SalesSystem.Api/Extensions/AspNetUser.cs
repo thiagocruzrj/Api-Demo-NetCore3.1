@@ -1,4 +1,5 @@
-﻿using SalesSystem.Business.Interfaces;
+﻿using Microsoft.AspNetCore.Http;
+using SalesSystem.Business.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -7,7 +8,14 @@ namespace SalesSystem.Api.Extensions
 {
     public class AspNetUser : IUser
     {
-        public string Name => throw new NotImplementedException();
+        private readonly IHttpContextAccessor _accessor;
+
+        public AspNetUser(IHttpContextAccessor accessor)
+        {
+            _accessor = accessor;
+        }
+
+        public string Name => _accessor.HttpContext.User.Identity.Name;
 
         public IEnumerable<Claim> GetClaimsIdentity()
         {
