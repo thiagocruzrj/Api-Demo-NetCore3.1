@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SalesSystem.Api.Extensions;
 using SalesSystem.Api.ViewModels;
 using SalesSystem.Business.Interfaces;
 using SalesSystem.Business.Models;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace SalesSystem.Api.Controller
 {
+    [Authorize]
     [Route("api/fornecedores")]
     public class FornecedoresController : MainController
     {
@@ -28,6 +31,7 @@ namespace SalesSystem.Api.Controller
             _enderecoRepository = enderecoRepository;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IEnumerable<FornecedorViewModel>> ObterTodos()
         {
@@ -44,6 +48,7 @@ namespace SalesSystem.Api.Controller
             return fornecedor;
         }
 
+        [ClaimsAuthorize("Fornecedor", "Adicionar")]
         [HttpPost]
         public async Task<ActionResult<FornecedorViewModel>> AdicionarFornecedor(FornecedorViewModel fornecedorViewModel)
         {
@@ -54,6 +59,7 @@ namespace SalesSystem.Api.Controller
             return CustomResponse(fornecedorViewModel);
         }
 
+        [ClaimsAuthorize("Fornecedor", "Atualizar")]
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<FornecedorViewModel>> AtualizarFornecedor(Guid id, FornecedorViewModel fornecedorViewModel)
         {
@@ -70,6 +76,7 @@ namespace SalesSystem.Api.Controller
             return CustomResponse(fornecedorViewModel);
         }
 
+        [ClaimsAuthorize("Fornecedor", "Excluir")]
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult> RemoverFornecedor(Guid id)
         {
@@ -88,6 +95,7 @@ namespace SalesSystem.Api.Controller
             return _mapper.Map<EnderecoViewModel>(await _enderecoRepository.ObterPorId(id));
         }
 
+        [ClaimsAuthorize("Fornecedor", "Atualizar")]
         [HttpPut("atualizar-endereco/{id:guid}")]
         public async Task<IActionResult> AtualizarEndereco(Guid id, EnderecoViewModel enderecoViewModel)
         {
