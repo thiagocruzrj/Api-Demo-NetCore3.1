@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SalesSystem.Api.Configuration;
 using SalesSystem.Data.Context;
+using Microsoft.OpenApi.Models;
 
 namespace SalesSystem.Api
 {
@@ -30,6 +31,11 @@ namespace SalesSystem.Api
             services.AddIdentityConfiguration(Configuration);
 
             services.WebConfig();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Api", Version = "V1" });
+            });
 
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
