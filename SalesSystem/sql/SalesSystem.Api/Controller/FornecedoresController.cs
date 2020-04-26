@@ -24,7 +24,7 @@ namespace SalesSystem.Api.Controller
                                         IMapper mapper,
                                         IFornecedorService fornecedorService,
                                         INotificador notificador,
-                                        IEnderecoRepository enderecoRepository
+                                        IEnderecoRepository enderecoRepository,
                                         IUser user) : base(notificador, user)
         {
             _fornecedorRepository = fornecedorRepository;
