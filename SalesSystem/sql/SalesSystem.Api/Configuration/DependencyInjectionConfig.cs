@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using SalesSystem.Api.Extensions;
 using SalesSystem.Business.Interfaces;
 using SalesSystem.Business.Notifications;
 using SalesSystem.Business.Services;
 using SalesSystem.Data.Context;
 using SalesSystem.Data.Repository;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using static SalesSystem.Api.Configuration.SwaggerConfig;
 
 namespace SalesSystem.Api.Configuration
 {
@@ -24,6 +27,8 @@ namespace SalesSystem.Api.Configuration
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUser, AspNetUser>();
+
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
             return services;
         }
