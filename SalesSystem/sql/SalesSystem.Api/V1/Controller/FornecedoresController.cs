@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SalesSystem.Api.Controllers;
 using SalesSystem.Api.Extensions;
 using SalesSystem.Api.ViewModels;
 using SalesSystem.Business.Interfaces;

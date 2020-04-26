@@ -5,7 +5,7 @@ using SalesSystem.Business.Notifications;
 using System;
 using System.Linq;
 
-namespace SalesSystem.Api.V1.Controller
+namespace SalesSystem.Api.Controllers
 {
     [ApiController]
     public abstract class MainController : ControllerBase
