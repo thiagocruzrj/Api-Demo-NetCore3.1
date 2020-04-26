@@ -49,6 +49,7 @@ namespace SalesSystem.Api.Controller
             return produtoViewModel;
         }
 
+        [ClaimsAuthorize("Produto", "Adicionar")]
         [HttpPost("adicionar")]
         public async Task<ActionResult<ProdutoViewModel>> Adicionar(ProdutoViewModel produtoViewModel)
         {
@@ -66,7 +67,7 @@ namespace SalesSystem.Api.Controller
             return CustomResponse(produtoViewModel);
         }
 
-        [ClaimsAuthorize("Produto", "Atualizar")]
+        [ClaimsAuthorize("Produto", "Atualizar-Alternativo")]
         [HttpPost("adicionar-alternativa")]
         public async Task<ActionResult<ProdutoViewModel>> AdicionarAlternativo(ProdutoImagemViewModel produtoImagemViewModel)
         {
