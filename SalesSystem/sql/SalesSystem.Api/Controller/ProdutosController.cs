@@ -14,7 +14,8 @@ using System.Threading.Tasks;
 namespace SalesSystem.Api.Controller
 {
     [Authorize]
-    [Route("api/produtos")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/produtos")]
     public class ProdutosController : MainController
     {
         private readonly IProdutoRepository _produtoRepository;

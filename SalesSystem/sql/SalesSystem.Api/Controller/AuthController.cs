@@ -14,7 +14,9 @@ using System.Threading.Tasks;
 
 namespace SalesSystem.Api.Controller
 {
-    [Route("api")]
+    [ApiVersion("2.0")]
+    [ApiVersion("1.0", Deprecated = true)]
+    [Route("api/v{version:apiVersion}")]
     public class AuthController : MainController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -22,13 +24,13 @@ namespace SalesSystem.Api.Controller
         private readonly AppSettings _appSettings;
 
         public AuthController(INotificador notificador,
-            UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
+            UserManager<IdentityUser> userManager,
             IOptions<AppSettings> appSettings,
             IUser user) : base(notificador, user)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
+            _userManager = userManager;
             _appSettings = appSettings.Value;
         }
 
