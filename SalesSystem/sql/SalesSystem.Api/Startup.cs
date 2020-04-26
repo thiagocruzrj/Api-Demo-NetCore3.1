@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using SalesSystem.Api.Configuration;
 using SalesSystem.Data.Context;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace SalesSystem.Api
 {
@@ -32,10 +33,7 @@ namespace SalesSystem.Api
 
             services.WebConfig();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Api", Version = "V1" });
-            });
+            services.AddSwaggerConfig();
 
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
@@ -43,7 +41,7 @@ namespace SalesSystem.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -60,11 +58,7 @@ namespace SalesSystem.Api
             app.UseAuthorization();
             app.UseMvcConfiguration();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Api V1");
-            });
+            app.UseSwaggerConfig(provider);
         }
     }
 }
