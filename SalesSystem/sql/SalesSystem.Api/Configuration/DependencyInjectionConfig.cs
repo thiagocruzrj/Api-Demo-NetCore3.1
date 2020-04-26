@@ -8,7 +8,6 @@ using SalesSystem.Business.Services;
 using SalesSystem.Data.Context;
 using SalesSystem.Data.Repository;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using static SalesSystem.Api.Configuration.SwaggerConfig;
 
 namespace SalesSystem.Api.Configuration
 {
