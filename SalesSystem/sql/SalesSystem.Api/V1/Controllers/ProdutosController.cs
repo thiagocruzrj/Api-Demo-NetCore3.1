@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace SalesSystem.Api.V1.Controller
+namespace SalesSystem.Api.V1.Controllers
 {
     [Authorize]
     [ApiVersion("1.0")]
