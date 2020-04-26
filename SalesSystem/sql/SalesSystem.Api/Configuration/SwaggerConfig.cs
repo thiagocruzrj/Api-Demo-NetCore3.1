@@ -21,9 +21,23 @@ namespace SalesSystem.Api.Configuration
             }
         }
 
-        private OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
+        static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
         {
-            throw new NotImplementedException();
+            var info = new OpenApiInfo()
+            {
+                Title = "API - SalesSystem",
+                Version = description.ApiVersion.ToString(),
+                Description = "Api of SalesSystem",
+                Contact = new OpenApiContact() { Name = "Thiago Cruz", Email = "thagocruz@gmail.com" },
+                License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
+            };
+
+            if (description.IsDeprecated)
+            {
+                info.Description += " Esta versão está obsoleta!";
+            }
+
+            return info;
         }
     }
 }
