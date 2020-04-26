@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SalesSystem.Api.Controller
+namespace SalesSystem.Api.V1.Controller
 {
     [Authorize]
     [ApiVersion("1.0")]

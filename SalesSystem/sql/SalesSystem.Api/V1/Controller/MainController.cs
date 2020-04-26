@@ -5,7 +5,7 @@ using SalesSystem.Business.Notifications;
 using System;
 using System.Linq;
 
-namespace SalesSystem.Api.Controller
+namespace SalesSystem.Api.V1.Controller
 {
     [ApiController]
     public abstract class MainController : ControllerBase
@@ -37,13 +37,14 @@ namespace SalesSystem.Api.Controller
         {
             if (OperacaoValida())
             {
-                return Ok(new {
+                return Ok(new
+                {
                     success = true,
                     data = result
                 });
             }
 
-            return BadRequest(new 
+            return BadRequest(new
             {
                 success = false,
                 errors = _notificador.ObterNotificacoes().Select(n => n.Mensagem)

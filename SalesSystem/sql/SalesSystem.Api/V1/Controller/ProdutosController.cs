@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace SalesSystem.Api.Controller
+namespace SalesSystem.Api.V1.Controller
 {
     [Authorize]
     [ApiVersion("1.0")]
@@ -56,7 +56,7 @@ namespace SalesSystem.Api.Controller
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var imagemNome = Guid.NewGuid() + "_" + produtoViewModel.Imagem;
-            if(!UploadArquivo(produtoViewModel.Imagem, imagemNome))
+            if (!UploadArquivo(produtoViewModel.Imagem, imagemNome))
             {
                 return CustomResponse();
             }
@@ -75,7 +75,7 @@ namespace SalesSystem.Api.Controller
 
             var imgPrefixo = Guid.NewGuid() + "_";
             if (!await UploadArquivoAlternativo(produtoImagemViewModel.ImagemUpload, imgPrefixo))
-            { 
+            {
                 return CustomResponse(ModelState);
             }
 

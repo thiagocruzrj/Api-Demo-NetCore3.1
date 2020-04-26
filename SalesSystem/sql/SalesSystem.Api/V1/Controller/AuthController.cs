@@ -12,7 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SalesSystem.Api.Controller
+namespace SalesSystem.Api.V1.Controller
 {
     [ApiVersion("2.0")]
     [ApiVersion("1.0", Deprecated = true)]
