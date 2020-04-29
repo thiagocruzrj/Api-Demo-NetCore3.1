@@ -64,77 +64,79 @@ namespace SalesSystem.Api.Configuration
             return app;
         }
 
-        public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+        
+    }
+
+    public class SwaggerDefaultValues : IOperationFilter
+    {
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            readonly IApiVersionDescriptionProvider provider;
-
-            public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) => this.provider = provider;
-
-            public void Configure(SwaggerGenOptions options)
+            if (operation.Parameters == null)
             {
-                foreach (var description in provider.ApiVersionDescriptions)
-                {
-                    options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
-                }
+                return;
             }
 
-            static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
+            foreach (var parameter in operation.Parameters)
             {
-                var info = new OpenApiInfo()
-                {
-                    Title = "API - SalesSystem",
-                    Version = description.ApiVersion.ToString(),
-                    Description = "Api of SalesSystem",
-                    Contact = new OpenApiContact() { Name = "Thiago Cruz", Email = "thagocruz@gmail.com" },
-                    License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
-                };
+                var description = context.ApiDescription
+                    .ParameterDescriptions
+                    .First(p => p.Name == parameter.Name);
 
-                if (description.IsDeprecated)
+                var routeInfo = description.RouteInfo;
+
+                operation.Deprecated = OpenApiOperation.DeprecatedDefault;
+
+                if (parameter.Description == null)
                 {
-                    info.Description += " Esta versão está obsoleta!";
+                    parameter.Description = description.ModelMetadata?.Description;
                 }
 
-                return info;
+                if (routeInfo == null)
+                {
+                    continue;
+                }
+
+                if (parameter.In != ParameterLocation.Path && parameter.Schema.Default == null)
+                {
+                    parameter.Schema.Default = new OpenApiString(routeInfo.DefaultValue.ToString());
+                }
+
+                parameter.Required |= !routeInfo.IsOptional;
+            }
+        }
+    }
+
+    public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+    {
+        readonly IApiVersionDescriptionProvider provider;
+
+        public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) => this.provider = provider;
+
+        public void Configure(SwaggerGenOptions options)
+        {
+            foreach (var description in provider.ApiVersionDescriptions)
+            {
+                options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
             }
         }
 
-        public class SwaggerDefaultValues : IOperationFilter
+        static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
         {
-            public void Apply(OpenApiOperation operation, OperationFilterContext context)
+            var info = new OpenApiInfo()
             {
-                if (operation.Parameters == null)
-                {
-                    return;
-                }
+                Title = "API - SalesSystem",
+                Version = description.ApiVersion.ToString(),
+                Description = "Api of SalesSystem",
+                Contact = new OpenApiContact() { Name = "Thiago Cruz", Email = "thagocruz@gmail.com" },
+                License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
+            };
 
-                foreach (var parameter in operation.Parameters)
-                {
-                    var description = context.ApiDescription
-                        .ParameterDescriptions
-                        .First(p => p.Name == parameter.Name);
-
-                    var routeInfo = description.RouteInfo;
-
-                    operation.Deprecated = OpenApiOperation.DeprecatedDefault;
-
-                    if (parameter.Description == null)
-                    {
-                        parameter.Description = description.ModelMetadata?.Description;
-                    }
-
-                    if (routeInfo == null)
-                    {
-                        continue;
-                    }
-
-                    if (parameter.In != ParameterLocation.Path && parameter.Schema.Default == null)
-                    {
-                        parameter.Schema.Default = new OpenApiString(routeInfo.DefaultValue.ToString());
-                    }
-
-                    parameter.Required |= !routeInfo.IsOptional;
-                }
+            if (description.IsDeprecated)
+            {
+                info.Description += " Esta versão está obsoleta!";
             }
+
+            return info;
         }
     }
 
